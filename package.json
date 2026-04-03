@@ -1,0 +1,25 @@
+{
+  "name": "devtree2026",
+  "version": "1.0.0",
+  "description": "First project with Express and Typescript",
+  "license": "ISC",
+  "author": "Kevin Maca",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.ts",
+    "start": "node dist/index.js",
+    "built": "tsc"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "express": "^5.2.1",
+    "mongoose": "^9.3.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "nodemon": "^3.1.14",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
