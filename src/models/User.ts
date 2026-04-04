@@ -1,25 +1,34 @@
-import mongoose, { Schema, skipMiddlewareFunction } from "mongoose";
+import mongoose, { Schema, skipMiddlewareFunction } from "mongoose"; 
 
-const userSchema = new Schema({
-    name: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    email: {
-        type: String,
-        required: true,
-        trim: true,
-        unique: true
-    },
-    password: {
-        type: String,
-        required: true,
-        trim: true
-    }
-})
+//The interface is the representation of our data, like a DTO: 
 
-//Now we are going to allow the use of schema form any please of our code or project
+export interface IUser{ name: String, email: String, password: String } 
 
-const user = mongoose.model('User', userSchema);
-export default user
+//The schema is the representation of our collection or table in our data base: 
+
+const userSchema = new Schema({ 
+    name: { 
+        type: String, 
+        required: true, 
+        trim: true 
+    }, 
+    
+    email: { 
+        type: String, 
+        required: true, 
+        trim: true, 
+        unique: true 
+    }, 
+    password: { 
+        type: String, 
+        required: true, 
+        trim: true 
+    } 
+}) 
+    
+    //Now we are going to allow the use of schema form any please of our code or project 
+    //<User> This is the name of our interface 
+
+    const User = mongoose.model<IUser>('User', userSchema); 
+    
+    export default User;

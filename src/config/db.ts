@@ -1,14 +1,13 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
 
-export const connectDB = async () =>{
-    try
-    {
-        const url = "mongodb+srv://kmacamonsalve:<6tIrxDj5mJrDgcGR>@cluster0.oncy6vh.mongodb.net"
-        const {connection} = await mongoose.connect(process.env.MONGO_URI);
-
-        console.log('MongoDB conectado!');
-    }catch(e)
-    {
-        console.log(e)
-    }
-}
+export const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI!);
+    console.log(`MongoDB conectado en: ${conn.connection.host}:${conn.connection.port}`);
+  } catch (error) {
+    console.error("Error conectando a MongoDB:", error);
+    process.exit(1); // Salir si falla la conexión
+  }
+};
