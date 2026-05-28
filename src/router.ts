@@ -1,27 +1,23 @@
 import {Router} from 'express'; 
-import User from "./models/User" 
+import {body} from 'express-validator';
+import createAccount from "./handlers";
+import login from "./handlers"
+import { handleInputErrors } from './middleware/validation';
 
 const router = Router(); 
 
 //Routing for authentication and register 
-router.post('/auth/register', async (req, res) => {
-  try {
-    const { name, email, password } = req.body;
+router.post('/auth/register',
+            body('handle').notEmpty().withMessage('El handle no debe estar vacío!...'),
+            body('name').notEmpty().withMessage('El nombre no debe estar vacío!...'),
+            body('email').isEmail().withMessage('Email no es válido!...'),
+            body('password').isLength({min:8}).withMessage('El password debe ser mínimo de 8 caracteres!...'),
+            handleInputErrors,
+            createAccount);
 
-    // Verificar si el usuario ya existe
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: 'El email ya está registrado' });
-    }
-
-    const user = new User({ name, email, password });
-    await user.save();
-
-    res.status(201).json({ message: 'Usuario registrado con exito', user });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error al registrar usuario', error });
-  }
-});
+router.post('/auth/login',
+            body('email').isEmail().withMessage('Email no válido'),
+            body('password').notEmpty().withMessage('El password no debe ser vacío!...'),
+            login);
 
 export default router;
